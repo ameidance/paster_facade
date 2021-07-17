@@ -27,7 +27,7 @@ func GetPost(requests *gin.Context) {
     if err := requests.ShouldBindJSON(&req); err != nil {
         logger.Errorf("[GetPost] bind json failed. err:%v", err)
         util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-        requests.JSON(http.StatusInternalServerError, structs.Map(resp))
+        requests.JSON(http.StatusBadRequest, structs.Map(resp))
         return
     }
 
@@ -41,7 +41,7 @@ func SavePost(requests *gin.Context) {
     if err := requests.ShouldBindJSON(&req); err != nil {
         logger.Errorf("[SavePost] bind json failed. err:%v", err)
         util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-        requests.JSON(http.StatusInternalServerError, structs.Map(resp))
+        requests.JSON(http.StatusBadRequest, structs.Map(resp))
         return
     }
 
@@ -56,7 +56,7 @@ func GetComment(requests *gin.Context) {
     if err := requests.ShouldBindQuery(&req); err != nil {
         logger.Errorf("[GetComment] bind json failed. err:%v", err)
         util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-        requests.JSON(http.StatusInternalServerError, structs.Map(resp))
+        requests.JSON(http.StatusBadRequest, structs.Map(resp))
         return
     }
 
@@ -70,7 +70,7 @@ func SaveComment(requests *gin.Context) {
     if err := requests.ShouldBindJSON(&req); err != nil {
         logger.Errorf("[SaveComment] bind json failed. err:%v", err)
         util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-        requests.JSON(http.StatusInternalServerError, structs.Map(resp))
+        requests.JSON(http.StatusBadRequest, structs.Map(resp))
         return
     }
 
