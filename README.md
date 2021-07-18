@@ -1,9 +1,11 @@
 # paster_facade
 
-Paster 服务端门面模块，以 [Gin](https://github.com/gin-gonic/gin) 作为 Web 服务端框架，使用字节跳动开源的微服务 RPC 框架 [KiteX](https://github.com/cloudwego/kitex)
-，通过 [Apache Thrift](https://github.com/apache/thrift) 协议与下游核心模块 [paster_core](https://github.com/AmeiDance/paster_core) 通信。
+Paster 服务端门面模块，以 [Gin](https://github.com/gin-gonic/gin) 作为 Web 服务端框架，使用字节跳动开源的微服务 RPC
+框架 [KiteX](https://github.com/cloudwego/kitex)
+，通过 [Apache Thrift](https://github.com/apache/thrift) 协议与下游核心模块 [paster_core](https://github.com/AmeiDance/paster_core)
+通信。
 
-**Todo:** 
+**Todo:**
 
 - [ ] 实现 KiteX 服务发现扩展接口，使用 Consul 服务发现
 - [ ] 设计模式优化，如 [handler.go](https://github.com/AmeiDance/paster_facade/blob/master/handler.go) 是否可以使用 Strategy?
