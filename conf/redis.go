@@ -1,9 +1,10 @@
 package conf
 
 import (
+	"io/ioutil"
+
 	"github.com/bytedance/gopkg/util/logger"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
 )
 
 const (
