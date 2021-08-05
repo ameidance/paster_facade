@@ -12,21 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Cors() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		method := context.Request.Method
-		context.Header("Access-Control-Allow-Origin", "*")
-		context.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
-		context.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-		context.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
-		context.Header("Access-Control-Allow-Credentials", "true")
-		if method == "OPTIONS" {
-			context.AbortWithStatus(http.StatusNoContent)
-		}
-		context.Next()
-	}
-}
-
 func init() {
 	router = gin.Default()
 	router.Use(Cors())
@@ -92,4 +77,19 @@ func SaveComment(requests *gin.Context) {
 	ctx := context.WithValue(context.Background(), "ip", requests.ClientIP())
 	resp = service.SaveComment(ctx, req)
 	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
+}
+
+func Cors() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		method := context.Request.Method
+		context.Header("Access-Control-Allow-Origin", "*")
+		context.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
+		context.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+		context.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
+		context.Header("Access-Control-Allow-Credentials", "true")
+		if method == "OPTIONS" {
+			context.AbortWithStatus(http.StatusNoContent)
+		}
+		context.Next()
+	}
 }
