@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/ameidance/paster_facade/client"
-	"github.com/bytedance/gopkg/util/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
 )
@@ -38,11 +38,11 @@ func getGinConfig() (*_GinConf, error) {
 	conf := new(_GinConf)
 	file, err := ioutil.ReadFile(_GIN_CONF_PATH)
 	if err != nil {
-		logger.Errorf("[getGinConfig] open file failed. err:%v", err)
+		klog.Errorf("[getGinConfig] open file failed. err:%v", err)
 		return nil, err
 	}
 	if err = yaml.Unmarshal(file, conf); err != nil {
-		logger.Errorf("[getGinConfig] unmarshal file failed. err:%v", err)
+		klog.Errorf("[getGinConfig] unmarshal file failed. err:%v", err)
 		return nil, err
 	}
 	return conf, nil

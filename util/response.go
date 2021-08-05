@@ -1,11 +1,10 @@
 package util
 
 import (
-	"context"
 	"reflect"
 
 	"github.com/ameidance/paster_facade/constant"
-	"github.com/bytedance/gopkg/util/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func FillBizResp(resp interface{}, status *constant.ErrorStatus) {
@@ -30,13 +29,13 @@ func IsStatusSuccess(status *constant.ErrorStatus) bool {
 	return status == nil || status == constant.SUCCESS || status.StatusCode == 0
 }
 
-func CheckRpcResponse(ctx context.Context, resp interface{}, err error) *constant.ErrorStatus {
+func CheckRpcResponse(resp interface{}, err error) *constant.ErrorStatus {
 	if err != nil {
-		logger.CtxErrorf(ctx, "[CheckRpcResponse] resp:%v, err:%v", resp, err)
+		klog.Errorf("[CheckRpcResponse] resp:%v, err:%v", resp, err)
 		return constant.ERR_SERVICE_INTERNAL
 	}
 	if resp == nil {
-		logger.CtxErrorf(ctx, "[CheckRpcResponse] resp is nil", resp)
+		klog.Errorf("[CheckRpcResponse] resp is nil", resp)
 		return constant.ERR_SERVICE_INTERNAL
 	}
 
@@ -45,7 +44,7 @@ func CheckRpcResponse(ctx context.Context, resp interface{}, err error) *constan
 		v = reflect.Indirect(v)
 	}
 	if IsNil(v) {
-		logger.CtxErrorf(ctx, "[CheckRpcResponse] resp is nil", resp)
+		klog.Errorf("[CheckRpcResponse] resp is nil", resp)
 		return constant.ERR_SERVICE_INTERNAL
 	}
 

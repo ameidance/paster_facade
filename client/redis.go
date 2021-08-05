@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/bytedance/gopkg/util/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/go-redis/redis/v8"
 	"gopkg.in/yaml.v3"
 )
@@ -50,11 +50,11 @@ func getRedisConfig() (*_RedisConf, error) {
 	conf := new(_RedisConf)
 	file, err := ioutil.ReadFile(_REDIS_CONF_PATH)
 	if err != nil {
-		logger.Errorf("[getRedisConfig] open file failed. err:%v", err)
+		klog.Errorf("[getRedisConfig] open file failed. err:%v", err)
 		return nil, err
 	}
 	if err = yaml.Unmarshal(file, conf); err != nil {
-		logger.Errorf("[getRedisConfig] unmarshal file failed. err:%v", err)
+		klog.Errorf("[getRedisConfig] unmarshal file failed. err:%v", err)
 		return nil, err
 	}
 	return conf, nil

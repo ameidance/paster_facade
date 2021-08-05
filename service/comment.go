@@ -8,15 +8,15 @@ import (
 	"github.com/ameidance/paster_facade/manager"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/util"
-	"github.com/bytedance/gopkg/util/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func GetComments(ctx context.Context, req *vo.GetCommentsRequest) *vo.GetCommentsResponse {
 	resp := new(vo.GetCommentsResponse)
 
 	rpcResp, err := client.CoreClient.GetComments(ctx, req.ConvertToDTO())
-	if errStatus := util.CheckRpcResponse(ctx, rpcResp, err); !util.IsStatusSuccess(errStatus) {
-		logger.CtxErrorf(ctx, "[GetComments] rpc [GetComments] failed. errStatus:%v", errStatus)
+	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
+		klog.Errorf("[GetComments] rpc [GetComments] failed. errStatus:%v", errStatus)
 		if rpcResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: rpcResp.GetStatusCode(),
@@ -41,8 +41,8 @@ func SaveComment(ctx context.Context, req *vo.SaveCommentRequest) *vo.SaveCommen
 	}
 
 	rpcResp, err := client.CoreClient.SaveComment(ctx, req.ConvertToDTO())
-	if errStatus := util.CheckRpcResponse(ctx, rpcResp, err); !util.IsStatusSuccess(errStatus) {
-		logger.CtxErrorf(ctx, "[SaveComment] rpc [SaveComment] failed. errStatus:%v", errStatus)
+	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
+		klog.Errorf("[SaveComment] rpc [SaveComment] failed. errStatus:%v", errStatus)
 		if rpcResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: rpcResp.GetStatusCode(),

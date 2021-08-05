@@ -4,8 +4,7 @@ go 1.15
 
 require (
 	github.com/apache/thrift v0.13.0
-	github.com/bytedance/gopkg v0.0.0-20210709064845-3c00f9323f09
-	github.com/cloudwego/kitex v0.0.1
+	github.com/cloudwego/kitex v0.0.3
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/validator/v10 v10.7.0 // indirect
 	github.com/go-redis/redis/v8 v8.11.0

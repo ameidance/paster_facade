@@ -9,14 +9,14 @@ import (
 	"github.com/ameidance/paster_facade/model/dto/kitex_gen/ameidance/paster/core"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/util"
-	"github.com/bytedance/gopkg/util/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 	resp := new(vo.GetPostResponse)
 	postResp, err := client.CoreClient.GetPost(ctx, req.ConvertToDTO())
-	if errStatus := util.CheckRpcResponse(ctx, postResp, err); !util.IsStatusSuccess(errStatus) {
-		logger.CtxErrorf(ctx, "[GetPost] rpc [GetPost] failed. errStatus:%v", errStatus)
+	if errStatus := util.CheckRpcResponse(postResp, err); !util.IsStatusSuccess(errStatus) {
+		klog.Errorf("[GetPost] rpc [GetPost] failed. errStatus:%v", errStatus)
 		if postResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: postResp.GetStatusCode(),
@@ -37,8 +37,8 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 		commentResp, err := client.CoreClient.DeletePost(ctx, &core.DeletePostRequest{
 			Id: req.Id,
 		})
-		if errStatus := util.CheckRpcResponse(ctx, commentResp, err); !util.IsStatusSuccess(errStatus) {
-			logger.CtxErrorf(ctx, "[GetPost] rpc [DeletePost] failed. errStatus:%v", errStatus)
+		if errStatus := util.CheckRpcResponse(commentResp, err); !util.IsStatusSuccess(errStatus) {
+			klog.Errorf("[GetPost] rpc [DeletePost] failed. errStatus:%v", errStatus)
 		}
 	}
 
@@ -55,8 +55,8 @@ func SavePost(ctx context.Context, req *vo.SavePostRequest) *vo.SavePostResponse
 	}
 
 	rpcResp, err := client.CoreClient.SavePost(ctx, req.ConvertToDTO())
-	if errStatus := util.CheckRpcResponse(ctx, rpcResp, err); !util.IsStatusSuccess(errStatus) {
-		logger.CtxErrorf(ctx, "[SavePost] rpc [SavePost] failed. errStatus:%v", errStatus)
+	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
+		klog.Errorf("[SavePost] rpc [SavePost] failed. errStatus:%v", errStatus)
 		if rpcResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: rpcResp.GetStatusCode(),
