@@ -6,9 +6,11 @@ import (
 )
 
 var (
+	Resolver   *ConsulResolver
 	CoreClient pastercoreservice.Client
 )
 
-func init() {
-	CoreClient = pastercoreservice.MustNewClient("ameidance.paster.core", client.WithHostPorts("0.0.0.0:8888"))
+func InitRpc() {
+	Resolver = NewConsulResolver()
+	CoreClient = pastercoreservice.MustNewClient("ameidance.paster.core", client.WithResolver(Resolver))
 }

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/ameidance/paster_facade/client"
+	"github.com/ameidance/paster_facade/constant"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
@@ -14,6 +15,8 @@ var router *gin.Engine
 
 func main() {
 	client.InitRedis()
+	client.InitConsul()
+	client.InitRpc()
 
 	ginConf, err := getGinConfig()
 	if err != nil {
@@ -30,13 +33,9 @@ type _GinConf struct {
 	Port    int    `yaml:"port"`
 }
 
-const (
-	_GIN_CONF_PATH = "conf/gin.yml"
-)
-
 func getGinConfig() (*_GinConf, error) {
 	conf := new(_GinConf)
-	file, err := ioutil.ReadFile(_GIN_CONF_PATH)
+	file, err := ioutil.ReadFile(constant.GIN_CONF_PATH)
 	if err != nil {
 		klog.Errorf("[getGinConfig] open file failed. err:%v", err)
 		return nil, err
