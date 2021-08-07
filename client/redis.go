@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"time"
 
+	"github.com/ameidance/paster_facade/constant"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/go-redis/redis/v8"
 	"gopkg.in/yaml.v3"
@@ -35,10 +36,6 @@ func InitRedis() {
 	}
 }
 
-const (
-	_REDIS_CONF_PATH = "conf/redis.yml"
-)
-
 type _RedisConf struct {
 	Addr     string `yaml:"addr"`
 	Password string `yaml:"password"`
@@ -48,7 +45,7 @@ type _RedisConf struct {
 
 func getRedisConfig() (*_RedisConf, error) {
 	conf := new(_RedisConf)
-	file, err := ioutil.ReadFile(_REDIS_CONF_PATH)
+	file, err := ioutil.ReadFile(constant.REDIS_CONF_PATH)
 	if err != nil {
 		klog.Errorf("[getRedisConfig] open file failed. err:%v", err)
 		return nil, err
