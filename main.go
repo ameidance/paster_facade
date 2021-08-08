@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 
 	"github.com/ameidance/paster_facade/client"
+	"github.com/ameidance/paster_facade/client/consul"
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/gin-gonic/gin"
@@ -14,16 +15,18 @@ import (
 var router *gin.Engine
 
 func main() {
-	client.InitRedis()
-	client.InitConsul()
-	client.InitRpc()
-
 	ginConf, err := getGinConfig()
 	if err != nil {
+		klog.Errorf("[main] get gin config failed. err:%v", err)
 		panic(err)
 	}
-	err = router.Run(fmt.Sprintf("%s:%d", ginConf.Address, ginConf.Port))
-	if err != nil {
+
+	client.InitRedis()
+	consul.InitConsul(ginConf.Port)
+	client.InitRpc()
+
+	if err = router.Run(fmt.Sprintf("%s:%d", ginConf.Address, ginConf.Port)); err != nil {
+		klog.Errorf("[main] server stopped with error. err:%v", err)
 		panic(err)
 	}
 }

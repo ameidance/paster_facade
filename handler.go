@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"net/http"
+	"sync/atomic"
 
+	"github.com/ameidance/paster_facade/client/consul"
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/service"
@@ -14,11 +16,12 @@ import (
 
 func init() {
 	router = gin.Default()
-	router.Use(Cors())
+	router.Use(cors())
 	router.POST("/post/get", GetPost)
 	router.POST("/post/save", SavePost)
 	router.GET("/comment/get", GetComment)
 	router.POST("/comment/save", SaveComment)
+	router.GET("/health", CheckHealth)
 }
 
 func GetPost(requests *gin.Context) {
@@ -79,7 +82,13 @@ func SaveComment(requests *gin.Context) {
 	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
 }
 
-func Cors() gin.HandlerFunc {
+func CheckHealth(requests *gin.Context) {
+	atomic.AddInt64(&consul.CheckCounter, 1)
+	klog.Infof("[CheckHealth] counter:%d", atomic.LoadInt64(&consul.CheckCounter))
+	requests.JSON(http.StatusOK, nil)
+}
+
+func cors() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		method := context.Request.Method
 		context.Header("Access-Control-Allow-Origin", "*")

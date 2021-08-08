@@ -1,12 +1,12 @@
 package util
 
 import (
-	"encoding/json"
-
 	"github.com/cloudwego/kitex/pkg/klog"
+	jsoniter "github.com/json-iterator/go"
 )
 
 func GetJsonMapFromStruct(obj interface{}) map[string]interface{} {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	data, err := json.Marshal(obj)
 	if err != nil {
 		klog.Errorf("[GetJsonMapFromStruct] marshal failed. err:%v", err)
