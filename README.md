@@ -7,7 +7,6 @@ Paster 服务端门面模块，使用 Web 服务端框架 [Gin](https://github.c
 **Todo:**
 
 - [x] 实现 KiteX 服务发现扩展接口，使用 [Consul](https://github.com/hashicorp/consul) 服务发现
-- [ ] 设计模式优化，如 [handler.go](https://github.com/AmeiDance/paster_facade/blob/master/handler.go) 是否可以使用 Strategy
 - [ ] 将项目打包成 Dokcer 镜像
 - [ ] ...
 
