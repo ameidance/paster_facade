@@ -5,18 +5,28 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-func GetJsonMapFromStruct(obj interface{}) map[string]interface{} {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
+
+func GetJsonMap(obj interface{}) map[string]interface{} {
 	data, err := json.Marshal(obj)
 	if err != nil {
-		klog.Errorf("[GetJsonMapFromStruct] marshal failed. err:%v", err)
+		klog.Errorf("[GetJsonMap] marshal failed. err:%v", err)
 		return nil
 	}
 	m := make(map[string]interface{})
 	err = json.Unmarshal(data, &m)
 	if err != nil {
-		klog.Errorf("[GetJsonMapFromStruct] unmarshal failed. err:%v", err)
+		klog.Errorf("[GetJsonMap] unmarshal failed. err:%v", err)
 		return nil
 	}
 	return m
+}
+
+func GetJsonString(obj interface{}) string {
+	str, err := json.MarshalToString(obj)
+	if err != nil {
+		klog.Errorf("[GetJsonString] marshal failed. err:%v", err)
+		return ""
+	}
+	return str
 }

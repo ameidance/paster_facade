@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	Config *_ConsulConf
-	Client *api.Client
+	_config *_ConsulConf
+	Client  *api.Client
 )
 
 type _ConsulConf struct {
@@ -20,19 +20,19 @@ type _ConsulConf struct {
 	Port     int    `yaml:"port"`
 }
 
-func InitConsul(servicePort int) {
+func InitConsul() {
 	var err error
-	Config, err = getConsulConfig()
-	if Config == nil || err != nil {
+	_config, err = getConsulConfig()
+	if _config == nil || err != nil {
 		panic(err)
 	}
 	config := api.DefaultConfig()
-	config.Address = fmt.Sprintf("%v:%v", Config.Hostname, Config.Port)
+	config.Address = fmt.Sprintf("%v:%v", _config.Hostname, _config.Port)
 	Client, err = api.NewClient(config)
 	if Client == nil || err != nil {
 		panic(err)
 	}
-	if NewRegistry().Initialize(servicePort) != nil {
+	if NewRegistry().Initialize() != nil {
 		panic(err)
 	}
 }

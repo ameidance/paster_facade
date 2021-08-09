@@ -16,7 +16,7 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 	resp := new(vo.GetPostResponse)
 	postResp, err := client.CoreClient.GetPost(ctx, req.ConvertToDTO())
 	if errStatus := util.CheckRpcResponse(postResp, err); !util.IsStatusSuccess(errStatus) {
-		klog.Errorf("[GetPost] rpc [GetPost] failed. errStatus:%v", errStatus)
+		klog.Errorf("[GetPost] rpc [GetPost] failed. errStatus:%v", util.GetJsonString(errStatus))
 		if postResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: postResp.GetStatusCode(),
@@ -38,7 +38,7 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 			Id: req.Id,
 		})
 		if errStatus := util.CheckRpcResponse(commentResp, err); !util.IsStatusSuccess(errStatus) {
-			klog.Errorf("[GetPost] rpc [DeletePost] failed. errStatus:%v", errStatus)
+			klog.Errorf("[GetPost] rpc [DeletePost] failed. errStatus:%v", util.GetJsonString(errStatus))
 		}
 	}
 

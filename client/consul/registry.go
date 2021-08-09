@@ -2,11 +2,10 @@ package consul
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
 	"os/signal"
 
-	"github.com/ameidance/paster_facade/constant"
+	"github.com/ameidance/paster_facade/frame"
 	"github.com/ameidance/paster_facade/util"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/registry"
@@ -19,18 +18,10 @@ var (
 )
 
 type Registry struct {
-	ServiceName string
-	InstanceId  string
 }
 
 func NewRegistry() *Registry {
-	if Config == nil {
-		return nil
-	}
-	return &Registry{
-		ServiceName: constant.SERVICE_NAME,
-		InstanceId:  fmt.Sprintf("%s-%d", constant.SERVICE_NAME, rand.Int()),
-	}
+	return &Registry{}
 }
 
 func (m *Registry) Register(info *registry.Info) (err error) {
@@ -39,8 +30,8 @@ func (m *Registry) Register(info *registry.Info) (err error) {
 	}
 
 	registration := new(api.AgentServiceRegistration)
-	registration.ID = m.InstanceId
-	registration.Name = m.ServiceName
+	registration.ID = frame.GetInstanceId()
+	registration.Name = frame.GetServiceName()
 	registration.Address = util.GetInternalIP()
 	_, err = fmt.Sscanf(info.Addr.String(), ":%v", &registration.Port)
 	if err != nil {
@@ -54,7 +45,7 @@ func (m *Registry) Register(info *registry.Info) (err error) {
 	registration.Check.Interval = "5s"
 	registration.Check.DeregisterCriticalServiceAfter = "10s"
 
-	klog.Infof("[Registry -> Register] registering... instance id:%v", m.InstanceId)
+	klog.Infof("[Registry -> Register] registering... instance id:%v", frame.GetInstanceId())
 	return Client.Agent().ServiceRegister(registration)
 }
 
@@ -63,13 +54,13 @@ func (m *Registry) Deregister(info *registry.Info) error {
 		return nil
 	}
 
-	klog.Infof("[Registry -> Register] deregistering... instance id:%v", m.InstanceId)
-	return Client.Agent().ServiceDeregister(m.InstanceId)
+	klog.Infof("[Registry -> Register] deregistering... instance id:%v", frame.GetInstanceId())
+	return Client.Agent().ServiceDeregister(frame.GetInstanceId())
 }
 
-func (m *Registry) Initialize(servicePort int) (err error) {
+func (m *Registry) Initialize() (err error) {
 	info := new(registry.Info)
-	info.Addr = utils.NewNetAddr("tcp", fmt.Sprintf(":%d", servicePort))
+	info.Addr = utils.NewNetAddr("tcp", fmt.Sprintf(":%d", frame.GinConf.Port))
 	if err = m.Register(info); err != nil {
 		return
 	}
