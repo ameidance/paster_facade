@@ -35,6 +35,7 @@ sh output/bootstrap.sh
 
 ### Todo
 
-- [x] 实现 KiteX 服务发现扩展接口，使用 [Consul](https://github.com/hashicorp/consul) 服务发现
+- [x] 实现 KiteX 服务发现扩展接口，使用 [Consul](https://github.com/hashicorp/consul) 服务注册与发现
+- [x] 新增 frame 层中间件优化 KiteX 框架请求响应日志
 - [ ] 将项目打包成 Dokcer 镜像
 - [ ] ...
