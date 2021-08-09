@@ -16,7 +16,7 @@ func GetComments(ctx context.Context, req *vo.GetCommentsRequest) *vo.GetComment
 
 	rpcResp, err := client.CoreClient.GetComments(ctx, req.ConvertToDTO())
 	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
-		klog.Errorf("[GetComments] rpc [GetComments] failed. errStatus:%v", errStatus)
+		klog.Errorf("[GetComments] rpc [GetComments] failed. errStatus:%v", util.GetJsonString(errStatus))
 		if rpcResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: rpcResp.GetStatusCode(),
@@ -42,7 +42,7 @@ func SaveComment(ctx context.Context, req *vo.SaveCommentRequest) *vo.SaveCommen
 
 	rpcResp, err := client.CoreClient.SaveComment(ctx, req.ConvertToDTO())
 	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
-		klog.Errorf("[SaveComment] rpc [SaveComment] failed. errStatus:%v", errStatus)
+		klog.Errorf("[SaveComment] rpc [SaveComment] failed. errStatus:%v", util.GetJsonString(errStatus))
 		if rpcResp != nil {
 			util.FillBizResp(resp, manager.ConvertToHttpStatus(&constant.ErrorStatus{
 				StatusCode: rpcResp.GetStatusCode(),

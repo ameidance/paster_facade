@@ -22,7 +22,6 @@ func (*Resolver) Target(ctx context.Context, target rpcinfo.EndpointInfo) (descr
 		return
 	}
 
-	klog.Infof("[Resolver -> Target] service name:%v", target.ServiceName())
 	return target.ServiceName()
 }
 

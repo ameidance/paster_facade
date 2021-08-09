@@ -30,12 +30,12 @@ func GetPost(requests *gin.Context) {
 	if err := requests.ShouldBindJSON(&req); err != nil {
 		klog.Errorf("[GetPost] bind json failed. err:%v", err)
 		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMapFromStruct(resp))
+		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
 		return
 	}
 
 	resp = service.GetPost(context.Background(), req)
-	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
+	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
 }
 
 func SavePost(requests *gin.Context) {
@@ -44,13 +44,13 @@ func SavePost(requests *gin.Context) {
 	if err := requests.ShouldBindJSON(&req); err != nil {
 		klog.Errorf("[SavePost] bind json failed. err:%v", err)
 		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMapFromStruct(resp))
+		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
 		return
 	}
 
 	ctx := context.WithValue(context.Background(), "ip", requests.ClientIP())
 	resp = service.SavePost(ctx, req)
-	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
+	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
 }
 
 func GetComment(requests *gin.Context) {
@@ -59,12 +59,12 @@ func GetComment(requests *gin.Context) {
 	if err := requests.ShouldBindQuery(&req); err != nil {
 		klog.Errorf("[GetComment] bind json failed. err:%v", err)
 		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMapFromStruct(resp))
+		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
 		return
 	}
 
 	resp = service.GetComments(context.Background(), req)
-	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
+	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
 }
 
 func SaveComment(requests *gin.Context) {
@@ -73,18 +73,18 @@ func SaveComment(requests *gin.Context) {
 	if err := requests.ShouldBindJSON(&req); err != nil {
 		klog.Errorf("[SaveComment] bind json failed. err:%v", err)
 		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMapFromStruct(resp))
+		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
 		return
 	}
 
 	ctx := context.WithValue(context.Background(), "ip", requests.ClientIP())
 	resp = service.SaveComment(ctx, req)
-	requests.JSON(http.StatusOK, util.GetJsonMapFromStruct(resp))
+	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
 }
 
 func CheckHealth(requests *gin.Context) {
 	atomic.AddInt64(&consul.CheckCounter, 1)
-	klog.Infof("[CheckHealth] counter:%d", atomic.LoadInt64(&consul.CheckCounter))
+	//klog.Debugf("[CheckHealth] counter:%d", atomic.LoadInt64(&consul.CheckCounter))
 	requests.JSON(http.StatusOK, nil)
 }
 
