@@ -3,8 +3,7 @@ module github.com/ameidance/paster_facade
 go 1.15
 
 require (
-	github.com/apache/thrift v0.13.0
-	github.com/cloudwego/kitex v0.0.3
+	github.com/cloudwego/kitex v0.0.4-0.20210818083940-6f39863ea550
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/validator/v10 v10.7.0 // indirect
 	github.com/go-redis/redis/v8 v8.11.0
@@ -17,7 +16,7 @@ require (
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.27.1
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 

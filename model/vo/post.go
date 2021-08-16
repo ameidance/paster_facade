@@ -3,9 +3,8 @@ package vo
 import (
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/ameidance/paster/core"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
 	"github.com/ameidance/paster_facade/util"
-	"github.com/apache/thrift/lib/go/thrift"
 )
 
 type GetPostRequest struct {
@@ -43,12 +42,12 @@ func (m *GetPostRequest) ConvertToDTO() *core.GetPostRequest {
 	}
 	return &core.GetPostRequest{
 		Id:       m.Id,
-		Password: thrift.StringPtr(m.Passwd),
+		Password: m.Passwd,
 	}
 }
 
 func (m *GetPostResponse) ConvertFromDTO(dto *core.GetPostResponse) {
-	if dto == nil || !dto.IsSetInfo() {
+	if dto == nil || dto.Info == nil {
 		return
 	}
 
@@ -74,7 +73,7 @@ func (m *SavePostRequest) ConvertToDTO() *core.SavePostRequest {
 			Nickname:     m.Nickname,
 			IsDisposable: m.IsDisposable,
 		},
-		Password: thrift.StringPtr(m.Passwd),
+		Password: m.Passwd,
 	}
 }
 

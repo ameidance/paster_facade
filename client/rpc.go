@@ -3,21 +3,22 @@ package client
 import (
 	"github.com/ameidance/paster_facade/client/consul"
 	"github.com/ameidance/paster_facade/frame"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/ameidance/paster/core/pastercoreservice"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core/pastercore"
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/transport"
 )
 
 var (
 	resolver   *consul.Resolver
 	options    []client.Option
-	CoreClient pastercoreservice.Client
+	CoreClient pastercore.Client
 )
 
 func init() {
 	resolver = consul.NewResolver()
-	options = append(options, client.WithClientBasicInfo(frame.EBI), client.WithResolver(resolver), client.WithMiddleware(frame.LogMiddleware))
+	options = append(options, client.WithClientBasicInfo(frame.EBI), client.WithResolver(resolver), client.WithTransportProtocol(transport.GRPC))
 }
 
 func InitRpc() {
-	CoreClient = pastercoreservice.MustNewClient("ameidance.paster.core", options...)
+	CoreClient = pastercore.MustNewClient("ameidance.paster.core", options...)
 }

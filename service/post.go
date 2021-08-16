@@ -6,7 +6,7 @@ import (
 	"github.com/ameidance/paster_facade/client"
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/ameidance/paster/core"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/util"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -27,7 +27,7 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 		}
 		return resp
 	}
-	if !postResp.IsSetInfo() {
+	if postResp.Info == nil {
 		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
 		return resp
 	}

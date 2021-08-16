@@ -3,9 +3,8 @@ package vo
 import (
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/ameidance/paster/core"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
 	"github.com/ameidance/paster_facade/util"
-	"github.com/apache/thrift/lib/go/thrift"
 )
 
 type CommentInfo struct {
@@ -43,12 +42,12 @@ func (m *GetCommentsRequest) ConvertToDTO() *core.GetCommentsRequest {
 	}
 	return &core.GetCommentsRequest{
 		PostId:   m.PostId,
-		Password: thrift.StringPtr(m.Passwd),
+		Password: m.Passwd,
 	}
 }
 
 func (m *GetCommentsResponse) ConvertFromDTO(dto *core.GetCommentsResponse) {
-	if dto == nil || !dto.IsSetInfo() {
+	if dto == nil || dto.Info == nil {
 		return
 	}
 
@@ -76,7 +75,7 @@ func (m *SaveCommentRequest) ConvertToDTO() *core.SaveCommentRequest {
 			Nickname: m.Nickname,
 		},
 		PostId:   m.PostId,
-		Password: thrift.StringPtr(m.Passwd),
+		Password: m.Passwd,
 	}
 }
 
