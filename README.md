@@ -1,7 +1,7 @@
 # paster_facade
 
 Paster 服务端门面模块，使用 Web 服务端框架 [Gin](https://github.com/gin-gonic/gin) 提供 HTTP 接口，使用字节跳动开源的微服务 RPC
-框架 [KiteX](https://github.com/cloudwego/kitex) 通过 [Thrift](https://github.com/apache/thrift)
+框架 [KiteX](https://github.com/cloudwego/kitex) 通过 [gRPC](https://github.com/grpc/grpc-go)
 协议与下游核心模块 [paster_core](https://github.com/ameidance/paster_core) 通信。
 
 <details>
