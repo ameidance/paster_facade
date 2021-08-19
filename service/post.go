@@ -13,7 +13,7 @@ import (
 )
 
 func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
-	resp := new(vo.GetPostResponse)
+	resp := vo.NewGetPostResponse()
 	postResp, err := client.CoreClient.GetPost(ctx, req.ConvertToDTO())
 	if errStatus := util.CheckRpcResponse(postResp, err); !util.IsStatusSuccess(errStatus) {
 		klog.Errorf("[GetPost] rpc [GetPost] failed. errStatus:%v", util.GetJsonString(errStatus))
@@ -45,7 +45,7 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 }
 
 func SavePost(ctx context.Context, req *vo.SavePostRequest) *vo.SavePostResponse {
-	resp := new(vo.SavePostResponse)
+	resp := vo.NewSavePostResponse()
 
 	if overLimit := manager.IsOverFrequencyLimit(ctx, ctx.Value("ip").(string)); overLimit {
 		util.FillBizResp(resp, constant.HTTP_ERR_FREQUENCY_OVER_LIMIT)

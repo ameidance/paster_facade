@@ -2,103 +2,40 @@ package main
 
 import (
 	"context"
-	"net/http"
-	"sync/atomic"
 
-	"github.com/ameidance/paster_facade/client/consul"
-	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/model/vo"
+	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade"
 	"github.com/ameidance/paster_facade/service"
-	"github.com/ameidance/paster_facade/util"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/gin-gonic/gin"
 )
 
-func init() {
-	router = gin.Default()
-	router.Use(cors())
-	router.POST("/post/get", GetPost)
-	router.POST("/post/save", SavePost)
-	router.GET("/comment/get", GetComment)
-	router.POST("/comment/save", SaveComment)
-	router.GET("/health", CheckHealth)
+// PasterFacadeImpl implements the last service interface defined in the IDL.
+type PasterFacadeImpl struct{}
+
+// GetPost implements the PasterFacadeImpl interface.
+func (s *PasterFacadeImpl) GetPost(ctx context.Context, req *facade.GetPostRequest) (resp *facade.GetPostResponse, err error) {
+	return service.GetPost(ctx, &vo.GetPostRequest{GetPostRequest: req}).GetPostResponse, nil
 }
 
-func GetPost(requests *gin.Context) {
-	req := new(vo.GetPostRequest)
-	resp := new(vo.GetPostResponse)
-	if err := requests.ShouldBindJSON(&req); err != nil {
-		klog.Errorf("[GetPost] bind json failed. err:%v", err)
-		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
-		return
-	}
-
-	resp = service.GetPost(context.Background(), req)
-	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
+// SavePost implements the PasterFacadeImpl interface.
+func (s *PasterFacadeImpl) SavePost(ctx context.Context, req *facade.SavePostRequest) (resp *facade.SavePostResponse, err error) {
+	return service.SavePost(ctx, &vo.SavePostRequest{SavePostRequest: req}).SavePostResponse, nil
 }
 
-func SavePost(requests *gin.Context) {
-	req := new(vo.SavePostRequest)
-	resp := new(vo.SavePostResponse)
-	if err := requests.ShouldBindJSON(&req); err != nil {
-		klog.Errorf("[SavePost] bind json failed. err:%v", err)
-		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
-		return
-	}
-
-	ctx := context.WithValue(context.Background(), "ip", requests.ClientIP())
-	resp = service.SavePost(ctx, req)
-	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
+// GetComments implements the PasterFacadeImpl interface.
+func (s *PasterFacadeImpl) GetComments(ctx context.Context, req *facade.GetCommentsRequest) (resp *facade.GetCommentsResponse, err error) {
+	return service.GetComments(ctx, &vo.GetCommentsRequest{GetCommentsRequest: req}).GetCommentsResponse, nil
 }
 
-func GetComment(requests *gin.Context) {
-	req := new(vo.GetCommentsRequest)
-	resp := new(vo.GetCommentsResponse)
-	if err := requests.ShouldBindQuery(&req); err != nil {
-		klog.Errorf("[GetComment] bind json failed. err:%v", err)
-		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
-		return
-	}
-
-	resp = service.GetComments(context.Background(), req)
-	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
+// SaveComment implements the PasterFacadeImpl interface.
+func (s *PasterFacadeImpl) SaveComment(ctx context.Context, req *facade.SaveCommentRequest) (resp *facade.SaveCommentResponse, err error) {
+	return service.SaveComment(ctx, &vo.SaveCommentRequest{SaveCommentRequest: req}).SaveCommentResponse, nil
 }
 
-func SaveComment(requests *gin.Context) {
-	req := new(vo.SaveCommentRequest)
-	resp := new(vo.SaveCommentResponse)
-	if err := requests.ShouldBindJSON(&req); err != nil {
-		klog.Errorf("[SaveComment] bind json failed. err:%v", err)
-		util.FillBizResp(resp, constant.HTTP_ERR_SERVICE_INTERNAL)
-		requests.JSON(http.StatusBadRequest, util.GetJsonMap(resp))
-		return
-	}
-
-	ctx := context.WithValue(context.Background(), "ip", requests.ClientIP())
-	resp = service.SaveComment(ctx, req)
-	requests.JSON(http.StatusOK, util.GetJsonMap(resp))
+// Check implements the PasterFacadeImpl interface.
+func (s *PasterFacadeImpl) Check(ctx context.Context, req *facade.HealthCheckRequest) (resp *facade.HealthCheckResponse, err error) {
+	return &facade.HealthCheckResponse{Status: facade.ServingStatus_SERVING}, nil
 }
 
-func CheckHealth(requests *gin.Context) {
-	atomic.AddInt64(&consul.CheckCounter, 1)
-	//klog.Debugf("[CheckHealth] counter:%d", atomic.LoadInt64(&consul.CheckCounter))
-	requests.JSON(http.StatusOK, nil)
-}
-
-func cors() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		method := context.Request.Method
-		context.Header("Access-Control-Allow-Origin", "*")
-		context.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
-		context.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-		context.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
-		context.Header("Access-Control-Allow-Credentials", "true")
-		if method == "OPTIONS" {
-			context.AbortWithStatus(http.StatusNoContent)
-		}
-		context.Next()
-	}
+func (s *PasterFacadeImpl) Watch(req *facade.HealthCheckRequest, stream facade.PasterFacade_WatchServer) (err error) {
+	return
 }

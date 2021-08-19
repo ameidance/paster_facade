@@ -12,7 +12,7 @@ import (
 )
 
 func GetComments(ctx context.Context, req *vo.GetCommentsRequest) *vo.GetCommentsResponse {
-	resp := new(vo.GetCommentsResponse)
+	resp := vo.NewGetCommentsResponse()
 
 	rpcResp, err := client.CoreClient.GetComments(ctx, req.ConvertToDTO())
 	if errStatus := util.CheckRpcResponse(rpcResp, err); !util.IsStatusSuccess(errStatus) {
@@ -33,7 +33,7 @@ func GetComments(ctx context.Context, req *vo.GetCommentsRequest) *vo.GetComment
 }
 
 func SaveComment(ctx context.Context, req *vo.SaveCommentRequest) *vo.SaveCommentResponse {
-	resp := new(vo.SaveCommentResponse)
+	resp := vo.NewSaveCommentResponse()
 
 	if overLimit := manager.IsOverFrequencyLimit(ctx, ctx.Value("ip").(string)); overLimit {
 		util.FillBizResp(resp, constant.HTTP_ERR_FREQUENCY_OVER_LIMIT)

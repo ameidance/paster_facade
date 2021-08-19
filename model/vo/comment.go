@@ -4,57 +4,69 @@ import (
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
 	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
+	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade"
 	"github.com/ameidance/paster_facade/util"
 )
 
-type CommentInfo struct {
-	Content  string `json:"content"`
-	Nickname string `json:"nickname"`
-	Time     int64  `json:"time"`
-}
-
 type GetCommentsRequest struct {
-	PostId int64  `json:"post_id" form:"post_id"`
-	Passwd string `json:"passwd,omitempty" form:"passwd,omitempty"`
+	*facade.GetCommentsRequest
 }
 
 type GetCommentsResponse struct {
-	Info          []*CommentInfo `json:"info"`
-	StatusCode    int32          `json:"status_code"`
-	StatusMessage string         `json:"status_msg"`
+	*facade.GetCommentsResponse
 }
 
 type SaveCommentRequest struct {
-	Content  string `json:"content"`
-	Nickname string `json:"nickname"`
-	PostId   int64  `json:"post_id"`
-	Passwd   string `json:"passwd,omitempty"`
+	*facade.SaveCommentRequest
 }
 
 type SaveCommentResponse struct {
-	StatusCode    int32  `json:"status_code"`
-	StatusMessage string `json:"status_msg"`
+	*facade.SaveCommentResponse
 }
 
-func (m *GetCommentsRequest) ConvertToDTO() *core.GetCommentsRequest {
-	if m == nil {
+func NewGetCommentsRequest() *GetCommentsRequest {
+	vo := new(GetCommentsRequest)
+	vo.GetCommentsRequest = new(facade.GetCommentsRequest)
+	return vo
+}
+
+func NewGetCommentsResponse() *GetCommentsResponse {
+	vo := new(GetCommentsResponse)
+	vo.GetCommentsResponse = new(facade.GetCommentsResponse)
+	return vo
+}
+
+func NewSaveCommentRequest() *SaveCommentRequest {
+	vo := new(SaveCommentRequest)
+	vo.SaveCommentRequest = new(facade.SaveCommentRequest)
+	return vo
+}
+
+func NewSaveCommentResponse() *SaveCommentResponse {
+	vo := new(SaveCommentResponse)
+	vo.SaveCommentResponse = new(facade.SaveCommentResponse)
+	return vo
+}
+
+func (vo *GetCommentsRequest) ConvertToDTO() *core.GetCommentsRequest {
+	if vo == nil {
 		return nil
 	}
 	return &core.GetCommentsRequest{
-		PostId:   m.PostId,
-		Password: m.Passwd,
+		PostId:   vo.PostId,
+		Password: vo.Passwd,
 	}
 }
 
-func (m *GetCommentsResponse) ConvertFromDTO(dto *core.GetCommentsResponse) {
+func (vo *GetCommentsResponse) ConvertFromDTO(dto *core.GetCommentsResponse) {
 	if dto == nil || dto.Info == nil {
 		return
 	}
 
 	info := dto.GetInfo()
-	m.Info = make([]*CommentInfo, 0)
+	vo.Info = make([]*facade.CommentInfo, 0)
 	for _, each := range info {
-		m.Info = append(m.Info, &CommentInfo{
+		vo.Info = append(vo.Info, &facade.CommentInfo{
 			Content:  each.GetContent(),
 			Nickname: each.GetNickname(),
 			Time:     each.GetCreateTime(),
@@ -62,28 +74,28 @@ func (m *GetCommentsResponse) ConvertFromDTO(dto *core.GetCommentsResponse) {
 	}
 
 	errStatus := manager.ConvertToHttpStatus(&constant.ErrorStatus{StatusCode: dto.GetStatusCode(), StatusMsg: dto.GetStatusMessage()})
-	util.FillBizResp(m, errStatus)
+	util.FillBizResp(vo, errStatus)
 }
 
-func (m *SaveCommentRequest) ConvertToDTO() *core.SaveCommentRequest {
-	if m == nil {
+func (vo *SaveCommentRequest) ConvertToDTO() *core.SaveCommentRequest {
+	if vo == nil {
 		return nil
 	}
 	return &core.SaveCommentRequest{
 		Info: &core.CommentInfo{
-			Content:  m.Content,
-			Nickname: m.Nickname,
+			Content:  vo.Content,
+			Nickname: vo.Nickname,
 		},
-		PostId:   m.PostId,
-		Password: m.Passwd,
+		PostId:   vo.PostId,
+		Password: vo.Passwd,
 	}
 }
 
-func (m *SaveCommentResponse) ConvertFromDTO(dto *core.SaveCommentResponse) {
+func (vo *SaveCommentResponse) ConvertFromDTO(dto *core.SaveCommentResponse) {
 	if dto == nil {
 		return
 	}
 
 	errStatus := manager.ConvertToHttpStatus(&constant.ErrorStatus{StatusCode: dto.GetStatusCode(), StatusMsg: dto.GetStatusMessage()})
-	util.FillBizResp(m, errStatus)
+	util.FillBizResp(vo, errStatus)
 }

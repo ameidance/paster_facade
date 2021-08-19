@@ -11,34 +11,31 @@ import (
 )
 
 var (
-	_config *_ConsulConf
-	Client  *api.Client
+	config *consulConf
+	client *api.Client
 )
 
-type _ConsulConf struct {
+type consulConf struct {
 	Hostname string `yaml:"hostname"`
 	Port     int    `yaml:"port"`
 }
 
 func InitConsul() {
 	var err error
-	_config, err = getConsulConfig()
-	if _config == nil || err != nil {
+	config, err = getConsulConfig()
+	if config == nil || err != nil {
 		panic(err)
 	}
-	config := api.DefaultConfig()
-	config.Address = fmt.Sprintf("%v:%v", _config.Hostname, _config.Port)
-	Client, err = api.NewClient(config)
-	if Client == nil || err != nil {
-		panic(err)
-	}
-	if NewRegistry().Initialize() != nil {
+	apiConfig := api.DefaultConfig()
+	apiConfig.Address = fmt.Sprintf("%v:%v", config.Hostname, config.Port)
+	client, err = api.NewClient(apiConfig)
+	if client == nil || err != nil {
 		panic(err)
 	}
 }
 
-func getConsulConfig() (*_ConsulConf, error) {
-	conf := new(_ConsulConf)
+func getConsulConfig() (*consulConf, error) {
+	conf := new(consulConf)
 	file, err := ioutil.ReadFile(constant.CONSUL_CONF_PATH)
 	if err != nil {
 		klog.Errorf("[getConsulConfig] open file failed. err:%v", err)

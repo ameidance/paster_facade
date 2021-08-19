@@ -22,7 +22,7 @@ func FillBizResp(resp interface{}, status *constant.ErrorStatus) {
 	}
 
 	respVal.FieldByName("StatusCode").SetInt(int64(status.StatusCode))
-	respVal.FieldByName("StatusMessage").SetString(status.StatusMsg)
+	respVal.FieldByName("StatusMsg").SetString(status.StatusMsg)
 }
 
 func IsStatusSuccess(status *constant.ErrorStatus) bool {

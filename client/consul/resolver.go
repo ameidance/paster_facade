@@ -18,7 +18,7 @@ func NewResolver() *Resolver {
 }
 
 func (*Resolver) Target(ctx context.Context, target rpcinfo.EndpointInfo) (description string) {
-	if Client == nil {
+	if client == nil {
 		return
 	}
 
@@ -26,12 +26,12 @@ func (*Resolver) Target(ctx context.Context, target rpcinfo.EndpointInfo) (descr
 }
 
 func (*Resolver) Resolve(ctx context.Context, desc string) (res discovery.Result, err error) {
-	if Client == nil {
+	if client == nil {
 		return
 	}
 
 	var services []*api.ServiceEntry
-	services, _, err = Client.Health().Service(desc, "", true, nil)
+	services, _, err = client.Health().Service(desc, "", true, nil)
 	if err != nil {
 		klog.Errorf("[Resolver -> Resolve] find healthy services failed. target service name:%v", desc)
 		return

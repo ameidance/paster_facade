@@ -4,19 +4,22 @@ import (
 	"github.com/ameidance/paster_facade/client"
 	"github.com/ameidance/paster_facade/client/consul"
 	"github.com/ameidance/paster_facade/frame"
+	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade/pasterfacade"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/gin-gonic/gin"
+	"github.com/cloudwego/kitex/server"
 )
-
-var router *gin.Engine
 
 func main() {
 	client.InitRedis()
 	consul.InitConsul()
 	client.InitRpc()
 
-	if err := router.Run(frame.GetGinAddress()); err != nil {
+	srv := pasterfacade.NewServer(new(PasterFacadeImpl), server.WithServiceAddr(frame.Address),
+		server.WithServerBasicInfo(frame.EBI), server.WithRegistry(consul.NewRegistry()))
+	if err := srv.Run(); err != nil {
 		klog.Errorf("[main] server stopped with error. err:%v", err)
 		panic(err)
+	} else {
+		klog.Infof("[main] server stopped.")
 	}
 }

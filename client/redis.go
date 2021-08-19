@@ -16,16 +16,16 @@ var (
 )
 
 func InitRedis() {
-	redisConf, err := getRedisConfig()
-	if redisConf == nil || err != nil {
+	conf, err := getRedisConfig()
+	if conf == nil || err != nil {
 		panic(err)
 	}
 
 	RedisClient = redis.NewClient(&redis.Options{
-		Addr:     redisConf.Addr,
-		Password: redisConf.Password,
-		DB:       redisConf.DB,
-		PoolSize: redisConf.PoolSize,
+		Addr:     conf.Addr,
+		Password: conf.Password,
+		DB:       conf.DB,
+		PoolSize: conf.PoolSize,
 	})
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -36,15 +36,15 @@ func InitRedis() {
 	}
 }
 
-type _RedisConf struct {
+type redisConf struct {
 	Addr     string `yaml:"addr"`
 	Password string `yaml:"password"`
 	DB       int    `yaml:"db"`
 	PoolSize int    `yaml:"pool_size"`
 }
 
-func getRedisConfig() (*_RedisConf, error) {
-	conf := new(_RedisConf)
+func getRedisConfig() (*redisConf, error) {
+	conf := new(redisConf)
 	file, err := ioutil.ReadFile(constant.REDIS_CONF_PATH)
 	if err != nil {
 		klog.Errorf("[getRedisConfig] open file failed. err:%v", err)

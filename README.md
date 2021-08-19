@@ -1,8 +1,8 @@
 # paster_facade
 
-Paster 服务端门面模块，使用 Web 服务端框架 [Gin](https://github.com/gin-gonic/gin) 提供 HTTP 接口，使用字节跳动开源的微服务 RPC
-框架 [KiteX](https://github.com/cloudwego/kitex) 通过 [gRPC](https://github.com/grpc/grpc-go)
-协议与下游核心模块 [paster_core](https://github.com/ameidance/paster_core) 通信。
+Paster 服务端门面模块，使用字节跳动开源的微服务 RPC 框架 [KiteX](https://github.com/cloudwego/kitex)
+通过 [gRPC](https://github.com/grpc/grpc-go) 协议与下游门面模块 [paster_core](https://github.com/ameidance/paster_core) 通信，
+接入 [APISIX](https://github.com/apache/apisix) 作为 API Gateway，实现 gRPC-HTTP 协议转换。
 
 <details>
 <summary><b>时序图</b></summary>
@@ -20,7 +20,7 @@ Paster 服务端门面模块，使用 Web 服务端框架 [Gin](https://github.c
 
 首先复制 `conf` 目录下所有 `*.example.yml` 配置文件并重命名为 `*.yml`，之后逐一配置。
 
-- `gin.yml` 为 Gin 框架服务启动配置，默认端口号为 5000
+- `kitex.yml` 为 KiteX 框架服务启动配置，默认端口号为 5000
 - `redis.yml` 为 Redis 连接配置
 - `consul.yml` 为 Consul 连接配置
 

@@ -4,86 +4,98 @@ import (
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
 	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
+	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade"
 	"github.com/ameidance/paster_facade/util"
 )
 
 type GetPostRequest struct {
-	Id     int64  `json:"id"`
-	Passwd string `json:"passwd,omitempty"`
+	*facade.GetPostRequest
 }
 
 type GetPostResponse struct {
-	Content       string `json:"content"`
-	Lang          int32  `json:"lang"`
-	Nickname      string `json:"nickname"`
-	IsDisposable  bool   `json:"is_disposable"`
-	Time          int64  `json:"time"`
-	StatusCode    int32  `json:"status_code"`
-	StatusMessage string `json:"status_msg"`
+	*facade.GetPostResponse
 }
 
 type SavePostRequest struct {
-	Content      string `json:"content"`
-	Lang         int32  `json:"lang"`
-	Nickname     string `json:"nickname"`
-	IsDisposable bool   `json:"is_disposable"`
-	Passwd       string `json:"passwd,omitempty"`
+	*facade.SavePostRequest
 }
 
 type SavePostResponse struct {
-	Id            int64  `json:"id"`
-	StatusCode    int32  `json:"status_code"`
-	StatusMessage string `json:"status_msg"`
+	*facade.SavePostResponse
 }
 
-func (m *GetPostRequest) ConvertToDTO() *core.GetPostRequest {
-	if m == nil {
+func NewGetPostRequest() *GetPostRequest {
+	vo := new(GetPostRequest)
+	vo.GetPostRequest = new(facade.GetPostRequest)
+	return vo
+}
+
+func NewGetPostResponse() *GetPostResponse {
+	vo := new(GetPostResponse)
+	vo.GetPostResponse = new(facade.GetPostResponse)
+	return vo
+}
+
+func NewSavePostRequest() *SavePostRequest {
+	vo := new(SavePostRequest)
+	vo.SavePostRequest = new(facade.SavePostRequest)
+	return vo
+}
+
+func NewSavePostResponse() *SavePostResponse {
+	vo := new(SavePostResponse)
+	vo.SavePostResponse = new(facade.SavePostResponse)
+	return vo
+}
+
+func (vo *GetPostRequest) ConvertToDTO() *core.GetPostRequest {
+	if vo == nil {
 		return nil
 	}
 	return &core.GetPostRequest{
-		Id:       m.Id,
-		Password: m.Passwd,
+		Id:       vo.Id,
+		Password: vo.Passwd,
 	}
 }
 
-func (m *GetPostResponse) ConvertFromDTO(dto *core.GetPostResponse) {
+func (vo *GetPostResponse) ConvertFromDTO(dto *core.GetPostResponse) {
 	if dto == nil || dto.Info == nil {
 		return
 	}
 
 	info := dto.GetInfo()
-	m.Content = info.GetContent()
-	m.Lang = int32(info.GetLanguage())
-	m.Nickname = info.GetNickname()
-	m.IsDisposable = info.GetIsDisposable()
-	m.Time = info.GetCreateTime()
+	vo.Content = info.GetContent()
+	vo.Lang = facade.LanguageType(info.GetLanguage())
+	vo.Nickname = info.GetNickname()
+	vo.IsDisposable = info.GetIsDisposable()
+	vo.Time = info.GetCreateTime()
 
 	errStatus := manager.ConvertToHttpStatus(&constant.ErrorStatus{StatusCode: dto.GetStatusCode(), StatusMsg: dto.GetStatusMessage()})
-	util.FillBizResp(m, errStatus)
+	util.FillBizResp(vo, errStatus)
 }
 
-func (m *SavePostRequest) ConvertToDTO() *core.SavePostRequest {
-	if m == nil {
+func (vo *SavePostRequest) ConvertToDTO() *core.SavePostRequest {
+	if vo == nil {
 		return nil
 	}
 	return &core.SavePostRequest{
 		Info: &core.PostInfo{
-			Content:      m.Content,
-			Language:     core.LanguageType(m.Lang),
-			Nickname:     m.Nickname,
-			IsDisposable: m.IsDisposable,
+			Content:      vo.Content,
+			Language:     core.LanguageType(vo.Lang),
+			Nickname:     vo.Nickname,
+			IsDisposable: vo.IsDisposable,
 		},
-		Password: m.Passwd,
+		Password: vo.Passwd,
 	}
 }
 
-func (m *SavePostResponse) ConvertFromDTO(dto *core.SavePostResponse) {
+func (vo *SavePostResponse) ConvertFromDTO(dto *core.SavePostResponse) {
 	if dto == nil {
 		return
 	}
 
-	m.Id = dto.GetId()
+	vo.Id = dto.GetId()
 
 	errStatus := manager.ConvertToHttpStatus(&constant.ErrorStatus{StatusCode: dto.GetStatusCode(), StatusMsg: dto.GetStatusMessage()})
-	util.FillBizResp(m, errStatus)
+	util.FillBizResp(vo, errStatus)
 }
