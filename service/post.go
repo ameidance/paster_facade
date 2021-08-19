@@ -34,9 +34,7 @@ func GetPost(ctx context.Context, req *vo.GetPostRequest) *vo.GetPostResponse {
 
 	postInfo := postResp.GetInfo()
 	if postInfo.GetIsDisposable() {
-		commentResp, err := client.CoreClient.DeletePost(ctx, &core.DeletePostRequest{
-			Id: req.Id,
-		})
+		commentResp, err := client.CoreClient.DeletePost(ctx, &core.DeletePostRequest{Id: req.Id})
 		if errStatus := util.CheckRpcResponse(commentResp, err); !util.IsStatusSuccess(errStatus) {
 			klog.Errorf("[GetPost] rpc [DeletePost] failed. errStatus:%v", util.GetJsonString(errStatus))
 		}
