@@ -58,6 +58,13 @@ func (vo *GetPostRequest) ConvertToDTO() *core.GetPostRequest {
 	}
 }
 
+func (vo *GetPostRequest) CheckParams() bool {
+	if vo == nil {
+		return false
+	}
+	return vo.GetId() > 0
+}
+
 func (vo *GetPostResponse) ConvertFromDTO(dto *core.GetPostResponse) {
 	if dto == nil || dto.Info == nil {
 		return
@@ -87,6 +94,13 @@ func (vo *SavePostRequest) ConvertToDTO() *core.SavePostRequest {
 		},
 		Password: vo.Passwd,
 	}
+}
+
+func (vo *SavePostRequest) CheckParams() bool {
+	if vo == nil {
+		return false
+	}
+	return len(vo.GetContent()) > 0 && len(vo.GetNickname()) > 0
 }
 
 func (vo *SavePostResponse) ConvertFromDTO(dto *core.SavePostResponse) {

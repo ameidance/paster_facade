@@ -58,6 +58,13 @@ func (vo *GetCommentsRequest) ConvertToDTO() *core.GetCommentsRequest {
 	}
 }
 
+func (vo *GetCommentsRequest) CheckParams() bool {
+	if vo == nil {
+		return false
+	}
+	return vo.GetPostId() > 0
+}
+
 func (vo *GetCommentsResponse) ConvertFromDTO(dto *core.GetCommentsResponse) {
 	if dto == nil || dto.Info == nil {
 		return
@@ -89,6 +96,13 @@ func (vo *SaveCommentRequest) ConvertToDTO() *core.SaveCommentRequest {
 		PostId:   vo.PostId,
 		Password: vo.Passwd,
 	}
+}
+
+func (vo *SaveCommentRequest) CheckParams() bool {
+	if vo == nil {
+		return false
+	}
+	return vo.GetPostId() > 0 && len(vo.GetContent()) > 0 && len(vo.GetNickname()) > 0
 }
 
 func (vo *SaveCommentResponse) ConvertFromDTO(dto *core.SaveCommentResponse) {
