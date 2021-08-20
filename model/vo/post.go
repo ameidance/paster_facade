@@ -24,9 +24,9 @@ type SavePostResponse struct {
 	*facade.SavePostResponse
 }
 
-func NewGetPostRequest() *GetPostRequest {
+func NewGetPostRequest(req *facade.GetPostRequest) *GetPostRequest {
 	vo := new(GetPostRequest)
-	vo.GetPostRequest = new(facade.GetPostRequest)
+	vo.GetPostRequest = req
 	return vo
 }
 
@@ -36,9 +36,9 @@ func NewGetPostResponse() *GetPostResponse {
 	return vo
 }
 
-func NewSavePostRequest() *SavePostRequest {
+func NewSavePostRequest(req *facade.SavePostRequest) *SavePostRequest {
 	vo := new(SavePostRequest)
-	vo.SavePostRequest = new(facade.SavePostRequest)
+	vo.SavePostRequest = req
 	return vo
 }
 

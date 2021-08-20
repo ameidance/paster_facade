@@ -13,22 +13,22 @@ type PasterFacadeImpl struct{}
 
 // GetPost implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) GetPost(ctx context.Context, req *facade.GetPostRequest) (resp *facade.GetPostResponse, err error) {
-	return service.GetPost(ctx, &vo.GetPostRequest{GetPostRequest: req}).GetPostResponse, nil
+	return service.GetPost(ctx, vo.NewGetPostRequest(req)).GetPostResponse, nil
 }
 
 // SavePost implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) SavePost(ctx context.Context, req *facade.SavePostRequest) (resp *facade.SavePostResponse, err error) {
-	return service.SavePost(ctx, &vo.SavePostRequest{SavePostRequest: req}).SavePostResponse, nil
+	return service.SavePost(ctx, vo.NewSavePostRequest(req)).SavePostResponse, nil
 }
 
 // GetComments implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) GetComments(ctx context.Context, req *facade.GetCommentsRequest) (resp *facade.GetCommentsResponse, err error) {
-	return service.GetComments(ctx, &vo.GetCommentsRequest{GetCommentsRequest: req}).GetCommentsResponse, nil
+	return service.GetComments(ctx, vo.NewGetCommentsRequest(req)).GetCommentsResponse, nil
 }
 
 // SaveComment implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) SaveComment(ctx context.Context, req *facade.SaveCommentRequest) (resp *facade.SaveCommentResponse, err error) {
-	return service.SaveComment(ctx, &vo.SaveCommentRequest{SaveCommentRequest: req}).SaveCommentResponse, nil
+	return service.SaveComment(ctx, vo.NewSaveCommentRequest(req)).SaveCommentResponse, nil
 }
 
 // Check implements the PasterFacadeImpl interface.

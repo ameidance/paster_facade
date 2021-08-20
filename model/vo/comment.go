@@ -24,9 +24,9 @@ type SaveCommentResponse struct {
 	*facade.SaveCommentResponse
 }
 
-func NewGetCommentsRequest() *GetCommentsRequest {
+func NewGetCommentsRequest(req *facade.GetCommentsRequest) *GetCommentsRequest {
 	vo := new(GetCommentsRequest)
-	vo.GetCommentsRequest = new(facade.GetCommentsRequest)
+	vo.GetCommentsRequest = req
 	return vo
 }
 
@@ -36,9 +36,9 @@ func NewGetCommentsResponse() *GetCommentsResponse {
 	return vo
 }
 
-func NewSaveCommentRequest() *SaveCommentRequest {
+func NewSaveCommentRequest(req *facade.SaveCommentRequest) *SaveCommentRequest {
 	vo := new(SaveCommentRequest)
-	vo.SaveCommentRequest = new(facade.SaveCommentRequest)
+	vo.SaveCommentRequest = req
 	return vo
 }
 
