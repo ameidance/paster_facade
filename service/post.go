@@ -58,9 +58,11 @@ func SavePost(ctx context.Context, req *vo.SavePostRequest) *vo.SavePostResponse
 		return resp
 	}
 
-	if overLimit := manager.IsOverFrequencyLimit(ctx, ctx.Value("ip").(string)); overLimit {
-		util.FillBizResp(resp, constant.HTTP_ERR_FREQUENCY_OVER_LIMIT)
-		return resp
+	if ip, ok := ctx.Value("ip").(string); ok && len(ip) > 0 {
+		if overLimit := manager.IsOverFrequencyLimit(ctx, ip); overLimit {
+			util.FillBizResp(resp, constant.HTTP_ERR_FREQUENCY_OVER_LIMIT)
+			return resp
+		}
 	}
 
 	rpcResp, err := client.CoreClient.SavePost(ctx, req.ConvertToDTO())
