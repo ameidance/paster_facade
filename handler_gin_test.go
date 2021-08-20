@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"net/http"
+	"testing"
 
+	"github.com/ameidance/paster_facade/client"
+	"github.com/ameidance/paster_facade/client/consul"
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/service"
@@ -12,10 +15,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var router *gin.Engine
+func Test(*testing.T) {
+	client.InitRedis()
+	consul.InitConsul()
+	client.InitRpc()
 
-func init() {
-	router = gin.Default()
+	router := gin.Default()
 	router.Use(cors())
 	router.POST("/post/get", GetPost)
 	router.POST("/post/save", SavePost)
@@ -23,9 +28,7 @@ func init() {
 	router.POST("/comment/save", SaveComment)
 	router.GET("/health", CheckHealth)
 
-	go func() {
-		_ = router.Run(":80")
-	}()
+	_ = router.Run(":6000")
 }
 
 func GetPost(requests *gin.Context) {
