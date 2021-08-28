@@ -3,7 +3,7 @@ module github.com/ameidance/paster_facade
 go 1.15
 
 require (
-	github.com/cloudwego/kitex v0.0.4-0.20210818083940-6f39863ea550
+	github.com/cloudwego/kitex v0.0.4
 	github.com/go-redis/redis/v8 v8.11.0
 	github.com/hashicorp/consul/api v1.9.1
 	github.com/json-iterator/go v1.1.11

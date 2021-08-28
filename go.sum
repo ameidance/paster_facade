@@ -19,8 +19,8 @@ github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghf
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/cloudwego/kitex v0.0.4-0.20210818083940-6f39863ea550 h1:dDIIbih6HxC4STL6S/ZuJWiHATprHUATvviQwR3Pako=
-github.com/cloudwego/kitex v0.0.4-0.20210818083940-6f39863ea550/go.mod h1:EIjPJ4Dom2ornk7xDCdKpUpOnf4Tulevimh4Tn05OGc=
+github.com/cloudwego/kitex v0.0.4 h1:9qnEdo2FFeSXbCwJ5nGHazAB+kE53dt9Ea2NKBTh3qI=
+github.com/cloudwego/kitex v0.0.4/go.mod h1:EIjPJ4Dom2ornk7xDCdKpUpOnf4Tulevimh4Tn05OGc=
 github.com/cloudwego/netpoll v0.0.2 h1:YIFcR1aN59/nof3KGqOnfjNWCiWr98xfD19J3QYpCPU=
 github.com/cloudwego/netpoll v0.0.2/go.mod h1:rZOiNI0FYjuvNybXKKhAPUja03loJi/cdv2F55AE6E8=
 github.com/cloudwego/netpoll v0.0.3 h1:LemwD6LQDhy3GNz/evTyh7DlxGnBua0Jl+5KmeVHXxA=
