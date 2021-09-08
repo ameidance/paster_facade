@@ -6,6 +6,8 @@ import (
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade"
 	"github.com/ameidance/paster_facade/service"
+	"github.com/ameidance/paster_facade/util"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 // PasterFacadeImpl implements the last service interface defined in the IDL.
@@ -13,22 +15,34 @@ type PasterFacadeImpl struct{}
 
 // GetPost implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) GetPost(ctx context.Context, req *facade.GetPostRequest) (resp *facade.GetPostResponse, err error) {
-	return service.GetPost(ctx, vo.NewGetPostRequest(req)).GetPostResponse, nil
+	klog.Infof("[GetPost] req:%v", util.GetJsonString(req))
+	resp = service.GetPost(ctx, vo.NewGetPostRequest(req)).GetPostResponse
+	klog.Infof("[GetPost] resp:%v", util.GetJsonString(resp))
+	return
 }
 
 // SavePost implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) SavePost(ctx context.Context, req *facade.SavePostRequest) (resp *facade.SavePostResponse, err error) {
-	return service.SavePost(ctx, vo.NewSavePostRequest(req)).SavePostResponse, nil
+	klog.Infof("[SavePost] req:%v", util.GetJsonString(req))
+	resp = service.SavePost(ctx, vo.NewSavePostRequest(req)).SavePostResponse
+	klog.Infof("[SavePost] resp:%v", util.GetJsonString(resp))
+	return
 }
 
 // GetComments implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) GetComments(ctx context.Context, req *facade.GetCommentsRequest) (resp *facade.GetCommentsResponse, err error) {
-	return service.GetComments(ctx, vo.NewGetCommentsRequest(req)).GetCommentsResponse, nil
+	klog.Infof("[GetComments] req:%v", util.GetJsonString(req))
+	resp = service.GetComments(ctx, vo.NewGetCommentsRequest(req)).GetCommentsResponse
+	klog.Infof("[GetComments] resp:%v", util.GetJsonString(resp))
+	return
 }
 
 // SaveComment implements the PasterFacadeImpl interface.
 func (s *PasterFacadeImpl) SaveComment(ctx context.Context, req *facade.SaveCommentRequest) (resp *facade.SaveCommentResponse, err error) {
-	return service.SaveComment(ctx, vo.NewSaveCommentRequest(req)).SaveCommentResponse, nil
+	klog.Infof("[SaveComment] req:%v", util.GetJsonString(req))
+	resp = service.SaveComment(ctx, vo.NewSaveCommentRequest(req)).SaveCommentResponse
+	klog.Infof("[SaveComment] resp:%v", util.GetJsonString(resp))
+	return
 }
 
 // Check implements the PasterFacadeImpl interface.
