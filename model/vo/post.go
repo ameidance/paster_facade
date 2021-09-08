@@ -3,8 +3,8 @@ package vo
 import (
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
-	"github.com/ameidance/paster_facade/model/vo/kitex_gen/facade"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/paster/core"
+	"github.com/ameidance/paster_facade/model/vo/kitex_gen/paster/facade"
 	"github.com/ameidance/paster_facade/util"
 )
 

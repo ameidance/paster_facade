@@ -6,7 +6,7 @@ import (
 	"github.com/ameidance/paster_facade/client"
 	"github.com/ameidance/paster_facade/constant"
 	"github.com/ameidance/paster_facade/manager"
-	"github.com/ameidance/paster_facade/model/dto/kitex_gen/core"
+	"github.com/ameidance/paster_facade/model/dto/kitex_gen/paster/core"
 	"github.com/ameidance/paster_facade/model/vo"
 	"github.com/ameidance/paster_facade/util"
 	"github.com/cloudwego/kitex/pkg/klog"
