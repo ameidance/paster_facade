@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RUN_NAME="ameidance.paster.facade"
+RUN_NAME="paster_facade"
 
 mkdir -p output/bin output/conf
 cp script/* output/

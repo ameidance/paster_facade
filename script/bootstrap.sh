@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-export PSM=${PSM:-ameidance.paster.facade}
+export PSM=${PSM:-paster_facade}
 CURDIR=$(cd $(dirname $0); pwd)
 
-exec "$CURDIR/bin/ameidance.paster.facade"
+exec "$CURDIR/bin/paster_facade"

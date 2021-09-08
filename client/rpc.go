@@ -20,5 +20,5 @@ func init() {
 }
 
 func InitRpc() {
-	CoreClient = core.MustNewClient("ameidance.paster.core", options...)
+	CoreClient = core.MustNewClient("paster_core", options...)
 }
