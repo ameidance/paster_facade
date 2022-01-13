@@ -1,7 +1,7 @@
 # paster_facade
 
 [Paster](https://github.com/ameidance/paster) 服务端门面模块，使用字节跳动开源的微服务 RPC 框架 [KiteX](https://github.com/cloudwego/kitex)
-通过 [gRPC](https://github.com/grpc/grpc-go) 协议与下游门面模块 [paster_core](https://github.com/ameidance/paster_core) 通信，
+通过 [gRPC](https://github.com/grpc/grpc-go) 协议与下游核心模块 [paster_core](https://github.com/ameidance/paster_core) 通信，
 接入 [APISIX](https://github.com/apache/apisix) 作为 API Gateway，实现 gRPC-HTTP 协议转换。
 
 <details>
